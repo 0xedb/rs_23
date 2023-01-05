@@ -16,5 +16,11 @@ fn main() {
         }
     };
 
-    println!("{ans}")
+    println!("{ans}");
+
+    let name = "some long name";
+
+    let part = &name[0..3];
+
+    println!("{part}");
 }
