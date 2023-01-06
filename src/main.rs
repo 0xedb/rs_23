@@ -1,8 +1,21 @@
 const FEE: f64 = 390.837;
 
+#[derive(Debug)]
+struct App;
+
 struct Feed {
     id: i32,
     tag: String,
+}
+
+impl Feed {
+    fn notify(&self) {
+        println!("notifying you of this feed!")
+    }
+
+    fn to_app(self) -> App {
+        return App {};
+    }
 }
 
 fn main() {
@@ -34,5 +47,10 @@ fn main() {
         tag: String::from("t"),
     };
 
-    println!("{} {}", my_feed.id, my_feed.tag)
+    println!("{} {}", my_feed.id, my_feed.tag);
+    my_feed.notify();
+
+    let app = my_feed.to_app();
+    println!("{app:?}");
+    // my_feed.notify();
 }
