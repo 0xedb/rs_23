@@ -1,3 +1,7 @@
+mod another;
+
+use another::MESSAGE;
+
 const FEE: f64 = 390.837;
 
 #[derive(Debug)]
@@ -15,6 +19,10 @@ impl Feed {
 
     fn to_app(self) -> App {
         return App {};
+    }
+
+    fn get_id() -> &'static str {
+        "FEED"
     }
 }
 
@@ -53,4 +61,7 @@ fn main() {
     let app = my_feed.to_app();
     println!("{app:?}");
     // my_feed.notify();
+
+    let id = Feed::get_id();
+    println!("{id}!! {MESSAGE}");
 }
