@@ -8,4 +8,6 @@ fn main() {
 
     println!("{choice:?}");
     println!("{items:?}");
+
+    panic!("Sad situation");
 }
