@@ -1,13 +1,21 @@
+
+
+trait Empty {
+    fn say(&self){println!("Hi!")}
+}
+
 #[derive(Debug)]
-struct Toffee;
+struct Something;
+
+impl Empty for Something {}
+
+fn f(t: &impl Empty) {
+    t.say()
+}
 
 fn main() {
-    let items = vec![Toffee, Toffee, Toffee];
+    let s = Something;
 
-    let choice = &items[0];
-
-    println!("{choice:?}");
-    println!("{items:?}");
-
-    panic!("Sad situation");
+    f(&s);
+    s.say();
 }
