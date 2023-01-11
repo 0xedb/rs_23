@@ -18,6 +18,11 @@ fn main() {
 
     let c: char = Default::default();
     println!("{c:?}");
+
+    let  n = &mut 42342;
+    *n = 0xedb;
+
+    println!("{n}")
 }
 
 /// just a function called a
