@@ -1,11 +1,12 @@
-use std::thread;
+use std::sync::Mutex;
 
 fn main() {
-    let v = vec![1, 2, 3];
+    let mine = Mutex::new(0xedb);
 
-    let handle = thread::spawn(move || {
-        println!("Here's a vector: {:?}", v);
-    });
+    {
+        let mut v = mine.lock().unwrap();
+        *v = 3932;
 
-    handle.join().unwrap();
+        println!("{v}");
+    }
 }
