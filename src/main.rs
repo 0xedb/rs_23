@@ -1,5 +1,9 @@
 use std::sync::Mutex;
 
+struct Mine;
+
+impl !Send for Mine{};
+
 fn main() {
     let mine = Mutex::new(0xedb);
 
