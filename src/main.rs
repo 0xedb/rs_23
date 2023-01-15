@@ -1,16 +1,45 @@
-use std::sync::Mutex;
+trait Serial {
+    fn serialize(&self);
+}
 
-struct Mine;
+#[derive(Debug)]
+struct HTML;
 
-impl !Send for Mine{};
+#[derive(Debug)]
+struct Svelte;
+
+#[derive(Debug)]
+struct React;
+
+fn serilize_it(s: Vec<Box<dyn Serial>>) {
+    s.iter().for_each(|a| a.serialize())
+}
+
+fn ss(s: &dyn Serial) {}
+
+// fn bb(s: Serial) {}
+
+unsafe fn i_can_byte() {
+    println!("byting you!");
+}
+
+static 
 
 fn main() {
-    let mine = Mutex::new(0xedb);
+    for i in 0..10 {
+        println!("{i}")
+    }
 
-    {
-        let mut v = mine.lock().unwrap();
-        *v = 3932;
+    let mut p = 3493;
 
-        println!("{v}");
+    let mut v = &mut p as *mut i32;
+
+    unsafe {
+        *v = 0xedb;
+        println!("{}", *v);
+    }
+
+    unsafe {
+        i_can_byte();
     }
 }
