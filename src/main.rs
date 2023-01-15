@@ -10,9 +10,11 @@ impl std::cmp::PartialEq for Point {
     }
 }
 
-fn main() {
+fn main() -> Result<(), i32>{
     let one = Point { x: 0, y: 1 };
     let two = Point { x: 0, y: 2 };
 
     println!("{}", one == two);
+
+    Ok(())
 }
