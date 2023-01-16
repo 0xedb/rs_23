@@ -1,20 +1,19 @@
-// #[derive(PartialEq)]
-struct Point {
-    x: i32,
-    y: i32,
-}
+fn main() {
+    let mut a = [30, 3420, 329, 623];
 
-impl std::cmp::PartialEq for Point {
-    fn eq(&self, other: &Self) -> bool {
-        self.x == other.x
-    }
-}
+    let r: Vec<_> = a.as_mut_slice().iter().map(|n| n * n).collect();
 
-fn main() -> Result<(), i32>{
-    let one = Point { x: 0, y: 1 };
-    let two = Point { x: 0, y: 2 };
+    println!("{r:?}");
 
-    println!("{}", one == two);
+    let p = true.then(||0xC0De);
 
-    Ok(())
+    println!("{p:?}");
+
+    println!("{}", 1i32.abs());
+
+    let mut a = [-930, 823, 1, 0, 12, 4, 5];
+
+    a.sort_by(|a,b |  a.cmp(&b));
+
+    println!("{a:?}");
 }
