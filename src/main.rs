@@ -8,4 +8,10 @@ fn main() {
     }
 
     println!("{}", u8::MAX);
+
+    let m = Some("bruno");
+
+    let res = m.map(|name| name.len()).unwrap_or_default();
+
+    println!("{res:?}!!");
 }
