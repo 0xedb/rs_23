@@ -1,19 +1,11 @@
 fn main() {
-    let mut a = [30, 3420, 329, 623];
+    let items: Vec<_> = (0..=1000).into_iter().map(|x| x + 1).collect();
 
-    let r: Vec<_> = a.as_mut_slice().iter().map(|n| n * n).collect();
+    let ans = items.binary_search(&1);
 
-    println!("{r:?}");
+    if ans.is_ok() {
+        println!("yaaaay {}", ans.unwrap());
+    }
 
-    let p = true.then(||0xC0De);
-
-    println!("{p:?}");
-
-    println!("{}", 1i32.abs());
-
-    let mut a = [-930, 823, 1, 0, 12, 4, 5];
-
-    a.sort_by(|a,b |  a.cmp(&b));
-
-    println!("{a:?}");
+    println!("{}", u8::MAX);
 }
