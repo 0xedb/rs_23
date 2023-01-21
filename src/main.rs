@@ -1,17 +1,13 @@
+use std::cell::{Cell};
+
+struct Something {
+    name: Cell<i32>,
+}
+
 fn main() {
-    let items: Vec<_> = (0..=1000).into_iter().map(|x| x + 1).collect();
+  let sm = Something{name: Cell::new(0xedb)};
 
-    let ans = items.binary_search(&1);
+  sm.name.replace(0xdead);
 
-    if ans.is_ok() {
-        println!("yaaaay {}", ans.unwrap());
-    }
-
-    println!("{}", u8::MAX);
-
-    let m = Some("bruno");
-
-    let res = m.map(|name| name.len()).unwrap_or_default();
-
-    println!("{res:?}!!");
+  println!("{:?}", sm.name);
 }
