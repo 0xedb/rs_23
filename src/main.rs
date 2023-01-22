@@ -10,4 +10,9 @@ fn main() {
   sm.name.replace(0xdead);
 
   println!("{:?}", sm.name);
+
+  let a: Vec<_> = vec![1,2,3];
+  println!("{a:?}");
+
+  
 }
