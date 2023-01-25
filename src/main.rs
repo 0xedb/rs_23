@@ -1,18 +1,19 @@
-use std::cell::{Cell};
+use serde::{Deserialize, Serialize};
 
-struct Something {
-    name: Cell<i32>,
-}
+/// Pointy
+#[derive(Debug, Serialize, Deserialize)]
+struct Point(i32, i32, i32);
 
 fn main() {
-  let sm = Something{name: Cell::new(0xedb)};
-
-  sm.name.replace(0xdead);
-
-  println!("{:?}", sm.name);
-
-  let a: Vec<_> = vec![1,2,3];
-  println!("{a:?}");
-
   
+  macro_rules! quest {
+      ($a: ident, $b:ident) => {
+        println!("({}::{})", $a, $b)
+      };
+  }
+
+  let a = 20;
+  let b = 340;
+
+  quest!(a, b);
 }
