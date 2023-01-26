@@ -1,30 +1,20 @@
- 
-macro_rules! plenty {
-    ($($i: literal),*) => {
-    {let mut m = Vec::new();
-
-    $(
-      m.push($i);
-    )*
-
-    m}
-
-    };
-}
+use std::sync::Mutex;
+use std::thread;
 
 fn main() {
-    let name = "carb";
-    let fee = 30.239;
+    let value_mtx = Mutex::new(0xed);
 
-    let res = plenty!(1, 2, 3, 4, 5, 0xedb);
+    thread::scope(|s| {
+        let t = s.spawn(|| {
+            let mut v = value_mtx.lock().unwrap();
+            *v = 0xc0de;
+            println!("value {:?}", v);
+        });
 
-    println!("{res:?}");
-
-    // thread::scope(|s| {
-    //     s.spawn(|| println!("scope 1 {name}"));
-
-    //     s.spawn(|| {
-    //         println!("hey {fee}");
-    //     });
-    // });
+        let b = s.spawn(|| {
+            let mut v = value_mtx.lock().unwrap();
+            *v = 0xedb;
+            print!("another value {:?}", v);
+        });
+    });
 }
