@@ -1,19 +1,14 @@
-use serde::{Deserialize, Serialize};
-
-/// Pointy
-#[derive(Debug, Serialize, Deserialize)]
-struct Point(i32, i32, i32);
+use std::thread;
 
 fn main() {
-  
-  macro_rules! quest {
-      ($a: ident, $b:ident) => {
-        println!("({}::{})", $a, $b)
-      };
-  }
+    let name = "carb";
+    let fee = 30.239;
 
-  let a = 20;
-  let b = 340;
+    thread::scope(|s| {
+        s.spawn(|| println!("scope 1 {name}"));
 
-  quest!(a, b);
+        s.spawn(|| {
+            println!("hey {fee}");
+        });
+    });
 }
