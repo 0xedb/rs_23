@@ -1,14 +1,30 @@
-use std::thread;
+ 
+macro_rules! plenty {
+    ($($i: literal),*) => {
+    {let mut m = Vec::new();
+
+    $(
+      m.push($i);
+    )*
+
+    m}
+
+    };
+}
 
 fn main() {
     let name = "carb";
     let fee = 30.239;
 
-    thread::scope(|s| {
-        s.spawn(|| println!("scope 1 {name}"));
+    let res = plenty!(1, 2, 3, 4, 5, 0xedb);
 
-        s.spawn(|| {
-            println!("hey {fee}");
-        });
-    });
+    println!("{res:?}");
+
+    // thread::scope(|s| {
+    //     s.spawn(|| println!("scope 1 {name}"));
+
+    //     s.spawn(|| {
+    //         println!("hey {fee}");
+    //     });
+    // });
 }
