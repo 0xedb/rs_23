@@ -20,15 +20,32 @@ impl Iterator for Mine {
         if self.pos < 10 {
             let p = self.pos;
             self.pos += 1;
-            Some(self.message.chars().nth(p).unwrap())
-        } else {
-            None
+            return Some(self.message.chars().nth(p).unwrap());
         }
+
+        None
     }
 }
 
+trait Fine {
+    fn fine(&self);
+}
+
+impl<D: std::fmt::Debug> Fine for D {
+    fn fine(&self) {
+        println!("magic here!!");
+    }
+
+}
+
+#[derive(Debug)]
+struct Single;
+
 fn main() {
-    let mine = Mine::new("2023 Hello World News".to_string());
+    let sng = Single;
+    sng.fine();
+
+    let mine = Mine::new("0123456789 Hello World News".to_string());
 
     for i in mine {
         println!("{i}");
