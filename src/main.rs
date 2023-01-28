@@ -31,11 +31,13 @@ trait Fine {
     fn fine(&self);
 }
 
-impl<D: std::fmt::Debug> Fine for D {
+impl<D> Fine for D
+where
+    D: std::fmt::Debug,
+{
     fn fine(&self) {
         println!("magic here!!");
     }
-
 }
 
 #[derive(Debug)]
