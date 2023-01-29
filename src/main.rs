@@ -49,7 +49,8 @@ fn main() {
 
     let items = [0, 10, 20, 40];
 
-    let ans = items.iter().fold(0, |acc, x| acc + x );
+    let ans = items.iter().fold(0, |acc, x| acc + x);
+    let ans2 = items.into_iter().reduce(|acc, x| acc + x).unwrap();
 
-    println!("{ans}");
+    println!("{ans} {ans2}");
 }
