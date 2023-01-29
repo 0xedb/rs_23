@@ -33,23 +33,23 @@ trait Fine {
 
 impl<D> Fine for D
 where
-    D: std::fmt::Debug,
+    D: std::fmt::Debug + Clone,
 {
     fn fine(&self) {
         println!("magic here!!");
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct Single;
 
 fn main() {
     let sng = Single;
     sng.fine();
 
-    let mine = Mine::new("0123456789 Hello World News".to_string());
+    let items = [0, 10, 20, 40];
 
-    for i in mine {
-        println!("{i}");
-    }
+    let ans = items.iter().fold(0, |acc, x| acc + x );
+
+    println!("{ans}");
 }
