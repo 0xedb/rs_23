@@ -52,5 +52,5 @@ fn main() {
     let ans = items.iter().fold(0, |acc, x| acc + x);
     let ans2 = items.into_iter().reduce(|acc, x| acc + x).unwrap();
 
-    println!("{ans} {ans2}");
+    println!("{ans} {ans2} {items:?}");
 }
