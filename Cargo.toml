@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 futures = "0.3.25"
 serde = { version = "*", features = ['derive'] }
+tokio = { version = "1.25.0", features = ["full"] }

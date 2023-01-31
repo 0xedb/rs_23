@@ -15,13 +15,49 @@
 //     block_on(hw);
 // }
 
-async fn for_tokio() {
-    println!("Welcome to Tokio");
+use std::ops::Not;
+
+#[derive(Debug, Default)]
+struct Mine {
+    something: Option<i32>,
+}
+
+impl Not for Mine {
+    type Output = Self;
+    fn not(self) -> Self::Output {
+        Mine {
+            ..Default::default()
+        }
+    }
+}
+
+use tokio::task;
+
+#[inline]
+async fn for_tokio() -> &'static str {
+    "funny right?"
 }
 
 #[tokio::main]
 async fn main() {
     let ans = for_tokio();
 
-    ans.await;
+    println!("{}", ans.await);
+
+    let a = 300;
+
+    task::spawn(async move {
+        println!("inside tokio thread {a}");
+    })
+    .await
+    .unwrap();
+
+    println!("from main thread");
+
+    let mine = Mine{something: Some(0xedb)};
+    print!("{mine:?}");
+    let n_mine = !mine;
+
+
+    print!("{n_mine:?}");
 }
