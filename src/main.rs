@@ -105,4 +105,10 @@ fn main() {
 
     println!("{r:?}");
     println!("{another:?}");
+
+    let a: Vec<_> = [1,2,3,4].iter().rev().collect();
+
+    println!("{a:?}");
+
+    dbg!("dsakfjdakfj" );
 }
