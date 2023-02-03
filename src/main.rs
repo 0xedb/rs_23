@@ -94,21 +94,15 @@
 //     println!("{fs:?}");
 // }
 
+macro_rules! p {
+    () => {
+        compile_error!("terrible situation");
+    };
+}
 
 fn main() {
     // let nothing = Something{};
 
     // println!("{nothing:?}");
-
-    let r: Vec<_> = std::iter::repeat(0xedb).take(10).map(|x| x).collect();
-    let another = std::iter::from_fn(|| Some(10i32)).take(40).collect::<Vec<_>>();
-
-    println!("{r:?}");
-    println!("{another:?}");
-
-    let a: Vec<_> = [1,2,3,4].iter().rev().collect();
-
-    println!("{a:?}");
-
-    dbg!("dsakfjdakfj" );
+    p!();
 }
