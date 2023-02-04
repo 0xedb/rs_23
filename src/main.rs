@@ -94,15 +94,24 @@
 //     println!("{fs:?}");
 // }
 
-macro_rules! p {
-    () => {
-        compile_error!("terrible situation");
-    };
-}
+// use proc_macro::TokenStream;
+
+// #[proc_macro]
+// fn something(_: TokenStream) -> TokenStream{
+//     "println!("
+// }
+
+mod another;
+use another::{Rsv, N_Rsv};
 
 fn main() {
-    // let nothing = Something{};
+    use std::cmp;
 
-    // println!("{nothing:?}");
-    p!();
+    let ans = cmp::max(320, 4309);
+
+    println!("{ans}");
+
+
+    let a = Rsv(300);
+    let b = N_Rsv(0xedb);
 }
