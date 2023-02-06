@@ -1,122 +1,52 @@
-// // // use futures::executor::block_on;
+// use actix_web::{get, web, App, HttpServer, Responder};
+// use serde::{Deserialize, Serialize};
 
-// // // async fn say_my_name() {
-// // //     println!("yes sir, saying your name");
-// // // }
-
-// // // async fn hello_world() {
-// // //     say_my_name().await;
-// // //     println!("hello world");
-// // // }
-
-// // // fn main() {
-// // //     let hw = hello_world();
-
-// // //     block_on(hw);
-// // // }
-
-// // use std::ops::Not;
-
-// // #[derive(Debug, Default)]
-// // struct Mine {
-// //     something: Option<i32>,
-// // }
-
-// // impl Not for Mine {
-// //     type Output = Self;
-// //     fn not(self) -> Self::Output {
-// //         Mine {
-// //             ..Default::default()
-// //         }
-// //     }
-// // }
-
-// // use tokio::task;
-
-// // #[inline]
-// // async fn for_tokio() -> &'static str {
-// //     "funny right?"
-// // }
-
-// // #[tokio::main]
-// // async fn main() {
-// //     let ans = for_tokio();
-
-// //     println!("{}", ans.await);
-
-// //     let a = 300;
-
-// //     task::spawn(async move {
-// //         println!("inside tokio thread {a}");
-// //     })
-// //     .await
-// //     .unwrap();
-
-// //     println!("from main thread");
-
-// //     let mine = Mine{something: Some(0xedb)};
-// //     print!("{mine:?}");
-// //     let n_mine = !mine;
-
-// //     print!("{n_mine:?}");
-// // }
-
-// macro_rules! t_vec {
-//     ($t: expr, $e: expr) => {{
-//         [$t; $e].to_vec()
-//     }};
+// #[derive(Debug, Deserialize, Serialize)]
+// struct Info {
+//     msg: Option<String>,
 // }
 
-// macro_rules! magic_answer {
-//     {} => {println!("INCORRECT")};
-//     ("open") => {
-//         println!("CORRECT")
+// #[get("/{msg}")]
+// async fn index(path: web::Path<Info>, q: web::Query<Info>, j: web::Form<Info>) -> impl Responder {
+//     let p = path.into_inner().msg;
+//     println!(
+//         "path: {} \t query: {}",
+//         p.unwrap(),
+//         q.msg.clone().unwrap_or_default()
+//     );
+//     println!("json:  {:?}", j.into_inner().msg);
+
+//     if true {
+//         return "Hello server"
 //     }
+
+//     "hmmm"
 // }
 
-// fn main() {
-//     magic_answer!();
-//     magic_answer!("open");
-
-//     let one = vec![1, 2, 3, 4];
-//     let two = vec![1, 2, 3, 4];
-//     let three = vec![1, 2, 3, 4];
-
-//     println!("{one:?} {two:?} {three:?}");
-
-//     // let e = Vec::with_capacity(200);
-
-//     let fs = t_vec!(32, 10);
-
-//     // let a = Vec::<i32>::with_capacity(200);
-//     // let tt = [32; 10].to_vec();
-
-//     println!("{fs:?}");
+// #[actix_web::main]
+// async fn main() -> std::io::Result<()> {
+//     HttpServer::new(|| App::new().service(index))
+//         .bind(("127.0.0.1", 2023))?
+//         .run()
+//         .await
 // }
 
-// use proc_macro::TokenStream;
+use actix_web::{get, web, App, Error, HttpResponse, HttpServer};
+use futures::{future::ok, stream::once};
 
-// #[proc_macro]
-// fn something(_: TokenStream) -> TokenStream{
-//     "println!("
-// }
+#[get("/stream")]
+async fn stream() -> HttpResponse {
+    let body = once(ok::<_, Error>(web::Bytes::from_static(b"test 1adjsflk jadklfj lasdfj klasdfj; kladjsf lkkaldjf  kldjaf kl;djf klads;jf klasdjf k;lasdjf kldjas;flj asd;sfjk daskl;jf ;kldajf kasdl;jf aklsdf; asdfkladshjfkljasdfjkl;sdjaf;lksdjfl; adsjkf sdl;ajf dkasl;jfikldajfkl;jsdklafjkldjas;fkjwepowaiojfawehjfiopasdhnikaflhjk;sdlfhiopadsh fiopasdhf iodah fpiohdpaf ihbadpsuifvbhc uiopadhbncvioahsdICFhpbnaisncv pioasdb hnf")));
 
-mod another;
-use another::{Rsv, N_Rsv};
+    HttpResponse::Ok()
+        .content_type("text/plain")
+        .streaming(body)
+}
 
-fn main() {
-    // use std::cmp;
-
-    // let ans = cmp::max(320, 4309);
-
-    // println!("{ans}");
-
-
-    // let a = Rsv(300);
-    // let b = N_Rsv(0xedb);
-
-
-
-    dbg!(matches!(20, 20));
-
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| App::new().service(stream))
+        .bind(("127.0.0.1", 2023))?
+        .run()
+        .await
 }
