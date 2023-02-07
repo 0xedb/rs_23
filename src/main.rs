@@ -36,7 +36,7 @@ use futures::{future::ok, stream::once};
 
 #[get("/stream")]
 async fn stream() -> HttpResponse {
-    let body = once(ok::<_, Error>(web::Bytes::from_static(b"test 1adjsflk jadklfj lasdfj klasdfj; kladjsf lkkaldjf  kldjaf kl;djf klads;jf klasdjf k;lasdjf kldjas;flj asd;sfjk daskl;jf ;kldajf kasdl;jf aklsdf; asdfkladshjfkljasdfjkl;sdjaf;lksdjfl; adsjkf sdl;ajf dkasl;jfikldajfkl;jsdklafjkldjas;fkjwepowaiojfawehjfiopasdhnikaflhjk;sdlfhiopadsh fiopasdhf iodah fpiohdpaf ihbadpsuifvbhc uiopadhbncvioahsdICFhpbnaisncv pioasdb hnf")));
+    let body = once(ok::<_, Error>(web::Bytes::from_static(b"test 1adjsf")));
 
     HttpResponse::Ok()
         .content_type("text/plain")
