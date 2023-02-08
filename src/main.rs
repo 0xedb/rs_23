@@ -1,52 +1,39 @@
-// use actix_web::{get, web, App, HttpServer, Responder};
-// use serde::{Deserialize, Serialize};
+use actix_web::{get, web, App, HttpServer, Responder};
+use std::{
+    net::Ipv4Addr,
+    sync::{Arc, Mutex},
+    time::Duration,
+};
 
-// #[derive(Debug, Deserialize, Serialize)]
-// struct Info {
-//     msg: Option<String>,
-// }
+#[derive(Debug, Clone)]
+struct ServCounter {
+    count: Arc<Mutex<i64>>,
+}
 
-// #[get("/{msg}")]
-// async fn index(path: web::Path<Info>, q: web::Query<Info>, j: web::Form<Info>) -> impl Responder {
-//     let p = path.into_inner().msg;
-//     println!(
-//         "path: {} \t query: {}",
-//         p.unwrap(),
-//         q.msg.clone().unwrap_or_default()
-//     );
-//     println!("json:  {:?}", j.into_inner().msg);
+#[get("/")]
+async fn index(data: web::Data<ServCounter>) -> impl Responder {
+    let mut d = data.count.lock().unwrap();
 
-//     if true {
-//         return "Hello server"
-//     }
+    *d += 1;
 
-//     "hmmm"
-// }
+    let ans = format!("{}", *d);
 
-// #[actix_web::main]
-// async fn main() -> std::io::Result<()> {
-//     HttpServer::new(|| App::new().service(index))
-//         .bind(("127.0.0.1", 2023))?
-//         .run()
-//         .await
-// }
-
-use actix_web::{get, web, App, Error, HttpResponse, HttpServer};
-use futures::{future::ok, stream::once};
-
-#[get("/stream")]
-async fn stream() -> HttpResponse {
-    let body = once(ok::<_, Error>(web::Bytes::from_static(b"test 1adjsf")));
-
-    HttpResponse::Ok()
-        .content_type("text/plain")
-        .streaming(body)
+    ans
 }
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| App::new().service(stream))
-        .bind(("127.0.0.1", 2023))?
-        .run()
-        .await
+    let counter = ServCounter {
+        count: Arc::new(Mutex::new(0x0)),
+    };
+
+    HttpServer::new(move || {
+        App::new()
+            .service(index)
+            .app_data(web::Data::new(counter.clone()))
+    })
+    .bind((Ipv4Addr::new(127, 0, 0, 1), 2023))?
+    .keep_alive(Duration::from_secs(20))
+    .run()
+    .await
 }
