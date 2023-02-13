@@ -39,7 +39,7 @@ fn main() {
 
     p(something);
 
-    
 
-    let j = "adfd".as_mut();
+
+    let m = nothing as Something;
 }
