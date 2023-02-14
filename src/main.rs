@@ -40,6 +40,5 @@ fn main() {
     p(something);
 
 
-
-    let m = nothing as Something;
+ 
 }
