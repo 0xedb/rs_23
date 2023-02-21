@@ -1,7 +1,6 @@
 use actix_web::{get, App, HttpServer, Responder};
 
-#[get("/")]
-async fn index() -> impl Responder {
+ 
     "hello world"
 }
 
