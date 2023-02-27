@@ -1,16 +1,15 @@
-use actix_web::{get, App, HttpServer, Responder};
+use std::{cell::RefCell, rc::Rc};
 
- 
-    "hello world"
+struct A {
+    next: Rc<RefCell<A>>,
 }
 
-#[actix_web::main]
-async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| App::new().service(index))
-        .bind("127.0.0.1:2023")?
-        .run()
-        .await
+// struct B {
+//     data: Vec<impl std::fmt::Display>
+// }
+
+fn main() {
+    let mut gen = 32;
+    let p = &mut 323;
+    let v: &mut i32 = &mut gen;
 }
-
-
-// try service config example
