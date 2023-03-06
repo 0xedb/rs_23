@@ -1,15 +1,52 @@
-use std::{cell::RefCell, rc::Rc};
+#[derive(Debug, Clone, Copy)]
+struct Mine;
 
-struct A {
-    next: Rc<RefCell<A>>,
+enum Value {
+    One,
+    Two,
 }
 
-// struct B {
-//     data: Vec<impl std::fmt::Display>
-// }
+impl From<i32> for Value {
+    fn from(_: i32) -> Self {
+        Value::One
+    }
+}
+
+impl From<i128> for Value {
+    fn from(_: i128) -> Self {
+        Value::Two
+    }
+}
+
+fn get_value<T>(v: T)
+where
+    T: Into<Value>,
+{
+    match &v.into() {
+        Value::One => println!("got one!!!"),
+        Value::Two => println!("got two!!!"),
+    }
+}
+
+fn echo<T>(_: T) {}
 
 fn main() {
-    let mut gen = 32;
-    let p = &mut 323;
-    let v: &mut i32 = &mut gen;
+    get_value(203i32);
+    get_value(23023i128);
+
+    let items = [Mine; 20];
+
+    println!("{items:?}");
+
+    let m = Mine;
+    echo(m);
+
+    println!("--{m:?}");
+    let num = 0xedb;
+
+    echo(num);
+
+    println!("{num}");
+
+    // let m =
 }
